@@ -9,20 +9,12 @@ from art import tprint
 
 init(autoreset=True)
 
-
-def print_banner():
-    tprint("LSB_SCAN", font="block")
-    print(f"\n{Fore.CYAN}Программа для детектирования LSB-стеганографии в изображениях")
-    print(f"{Fore.MAGENTA}{'=' * 50}{Style.RESET_ALL}\n")
-
-
 def is_image_file(filename):
     image_extensions = ('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp')
     return filename.lower().endswith(image_extensions)
 
 
 def calculate_chi_squared(observed):
-    """Вычисляет хи-квадрат статистику для пар значений LSB."""
     expected = np.zeros(256, dtype=np.float64)
     for i in range(0, 256, 2):
         if i + 1 >= 256:
@@ -57,14 +49,13 @@ def analyze_image(image_path):
 
         avg_chi = np.mean(chi_results)
 
-        # Оптимизированный порог (подобран на тестовых данных)
         threshold = 340
         is_stego = avg_chi < threshold
 
         if is_stego:
-            print(f"{Fore.RED}Вероятность наличия скрытых данных: Высокая (χ²={avg_chi:.1f})")
+            print(f"{image_path} {Fore.RED}ОПАСНО! СТЕГО-КОНТЕЙНЕР!")
         else:
-            print(f"{Fore.GREEN}Скрытые данные не обнаружены (χ²={avg_chi:.1f})")
+            print(f"{image_path} {Fore.GREEN}БЕЗОПАСНО!")
 
         return avg_chi, is_stego
 
@@ -118,8 +109,6 @@ def analyze_directory(directory):
 
 
 def main():
-    print_banner()
-
     parser = argparse.ArgumentParser(
         description="Детектор LSB стеганографии с улучшенной точностью",
         epilog="Примеры:\n  scanner.py -f image.jpg\n  scanner.py -d ./photos",
