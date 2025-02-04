@@ -24,7 +24,7 @@ def calculate_chi_squared(observed):
         expected[i] = expected_val
         expected[i + 1] = expected_val
 
-    expected[expected == 0] = 1e-10  # Избегаем деления на ноль
+    expected[expected == 0] = 1e-10
     chi2, _ = chisquare(observed, expected)
     return chi2
 
@@ -36,9 +36,9 @@ def analyze_image(image_path):
         pixels = np.array(image)
 
         channels = [
-            pixels[:, :, 0].flatten(),  # Красный канал
-            pixels[:, :, 1].flatten(),  # Зеленый канал
-            pixels[:, :, 2].flatten()  # Синий канал
+            pixels[:, :, 0].flatten(),
+            pixels[:, :, 1].flatten(),
+            pixels[:, :, 2].flatten()
         ]
 
         chi_results = []
@@ -109,6 +109,8 @@ def analyze_directory(directory):
 
 
 def main():
+    tprint('scan_lsb')
+
     parser = argparse.ArgumentParser(
         description="Детектор LSB стеганографии с улучшенной точностью",
         epilog="Примеры:\n  scanner.py -f image.jpg\n  scanner.py -d ./photos",
