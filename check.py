@@ -135,8 +135,7 @@ def main():
     except Exception as e:
         print(f"\n{Fore.RED}{'!' * 20} ОШИБКА {'!' * 20}")
         print(f"{str(e)}")
-        print(f"{Fore.RED}{'!' * 50}")
-
+        print(f"{Fore.RED}{'!' * 40}")
 
 if __name__ == "__main__":
     main()

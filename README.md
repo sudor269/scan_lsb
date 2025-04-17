@@ -3,4 +3,4 @@
 
 Установка всех библиотек: pip install -r requirements.txt
 
-Использование: python3 check.py [option] file/dir
+Использование: python3 check.py -d/-f file/dir
